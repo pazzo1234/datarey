@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>My account | Patti Finance Bank</title>
+<style>
+:root{--bg:#F3F6F8;--card:#fff;--ink:#0E2233;--muted:#56677A;--line:#D3DAE2;--acc:#0F766E;--acc2:#0B5A54;--gold:#C9A227;--soft:#E3F2F0;--hero:#0E2233;--err:#B42318}
+:root[data-theme=dark]{--bg:#0B1620;--card:#12202D;--ink:#E8EEF3;--muted:#9FB0C0;--line:#243545;--acc:#2DD4BF;--acc2:#5EEAD4;--soft:#14343A;--hero:#08111A;--err:#F97066}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.6}
+a{color:inherit;text-decoration:none}
+.w{max-width:1000px;margin:0 auto;padding:0 24px}
+:focus-visible{outline:3px solid #5EEAD4;outline-offset:2px}
+header{background:var(--card);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;gap:12px;height:68px}
+.logo{font-weight:700;font-size:1.2rem;display:flex;gap:10px;align-items:center;margin-right:auto}
+.mark{width:34px;height:34px;border-radius:8px;background:var(--hero);color:var(--gold);display:grid;place-items:center;font-weight:800}
+.btn{display:inline-block;padding:10px 18px;border-radius:6px;font:inherit;font-weight:600;background:var(--acc);color:#fff;border:2px solid var(--acc);cursor:pointer}
+:root[data-theme=dark] .btn{color:#06201D}
+.btn:hover{background:var(--acc2);border-color:var(--acc2)}
+.btn.o{background:transparent;color:var(--ink);border-color:var(--line)}.btn.o:hover{border-color:var(--acc);color:var(--acc)}
+.ic{background:none;border:1px solid var(--line);border-radius:6px;width:40px;height:40px;cursor:pointer;color:var(--ink);font-size:1.1rem}
+main{padding:36px 0 64px}
+h1{font-size:1.7rem;margin-bottom:4px}.sub{color:var(--muted);margin-bottom:24px}
+.top{display:grid;grid-template-columns:1.4fr 1fr;gap:18px;margin-bottom:18px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:22px}
+.bal{background:var(--hero);color:#fff;border:0}
+.bal small{opacity:.7}.bal strong{display:block;font-size:2.2rem;line-height:1.2;margin:6px 0}
+.bal .meta{display:flex;gap:20px;flex-wrap:wrap;font-size:.9rem;opacity:.85}
+.card h2{font-size:1.1rem;margin-bottom:12px}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.acts .btn{text-align:center;margin-top:0}
+.tx{list-style:none}
+.tx li{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid var(--line)}
+.tx li:first-child{border-top:0}
+.tx small{display:block;color:var(--muted)}
+.pos{color:var(--acc);font-weight:600}.neg{font-weight:600}
+.row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card p{color:var(--muted);font-size:.93rem}
+.card .btn{margin-top:12px}
+.new{display:inline-block;background:var(--gold);color:#241B00;font-size:.75rem;font-weight:700;padding:2px 8px;border-radius:99px;margin-bottom:8px}
+dialog{margin:auto;border:1px solid var(--line);border-radius:12px;padding:24px;width:min(400px,92vw);background:var(--card);color:var(--ink)}
+dialog::backdrop{background:rgba(5,12,20,.6)}dialog h2{margin-bottom:14px}
+.fld{margin-bottom:12px}label{display:block;font-weight:600;font-size:.9rem;margin-bottom:3px}
+input{width:100%;padding:9px 10px;font:inherit;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--ink)}
+.err{color:var(--err);font-size:.88rem;min-height:1.3em}
+.dact{display:flex;gap:10px}
+@media(max-width:760px){.top,.row{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header><div class="w nav">
+  <a href="index.html" class="logo"><span class="mark">P</span>Patti Finance Bank</a>
+  <button class="ic" id="theme" aria-label="Switch dark or light mode">◐</button>
+  <button class="btn o" id="out">Sign out</button>
+</div></header>
+
+<main class="w">
+  <h1 id="hello">Welcome</h1>
+  <p class="sub">Here is a summary of your account.</p>
+
+  <div class="top">
+    <div class="card bal">
+      <small id="atype">Account</small>
+      <strong id="bal">0 RWF</strong>
+      <div class="meta"><span id="anum"></span><span id="aemail"></span></div>
+    </div>
+    <div class="card">
+      <h2>Quick actions</h2>
+      <div class="acts">
+        <button class="btn" data-a="deposit">Deposit</button>
+        <button class="btn" data-a="send">Send money</button>
+        <button class="btn o" data-a="bill">Pay a bill</button>
+        <a class="btn o" href="index.html#tools">Plan with tools</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="card">
+      <h2>Recent activity</h2>
+      <ul class="tx" id="tx"></ul>
+    </div>
+    <div class="card">
+      <span class="new">Only at Patti</span>
+      <h2>Savings circle</h2>
+      <p>Save with family or friends in one secure account. Plan your group's contributions and payout turns before you start.</p>
+      <a class="btn o" href="index.html#tools">Plan a circle</a>
+    </div>
+  </div>
+</main>
+
+<dialog id="dlg">
+  <h2 id="dt"></h2>
+  <form id="df">
+    <div class="fld" id="rwrap"><label for="who" id="wl">Recipient</label><input id="who" type="text"></div>
+    <div class="fld"><label for="amt">Amount (RWF)</label><input id="amt" type="number" min="1" step="1" required></div>
+    <p class="err" id="derr" role="alert"></p>
+    <div class="dact"><button class="btn" type="submit">Confirm</button><button class="btn o" type="button" id="dc">Cancel</button></div>
+  </form>
+</dialog>
+
+<script>
+const $=s=>document.querySelector(s);
+const money=n=>new Intl.NumberFormat('en',{maximumFractionDigits:0}).format(n)+' RWF';
+const root=document.documentElement;
+try{const s=localStorage.getItem('theme');if(s)root.dataset.theme=s;else if(matchMedia('(prefers-color-scheme:dark)').matches)root.dataset.theme='dark'}catch(e){}
+$('#theme').onclick=()=>{const t=root.dataset.theme==='dark'?'light':'dark';root.dataset.theme=t;try{localStorage.setItem('theme',t)}catch(e){}};
+
+// Guard: only signed-in customers can see this page
+let acct=null,txs=[],ok=false;
+try{acct=JSON.parse(localStorage.getItem('patti_account'));ok=sessionStorage.getItem('patti_session')==='1'}catch(e){}
+if(!acct||!ok){location.replace('index.html')}
+
+try{txs=JSON.parse(localStorage.getItem('patti_tx'))||[]}catch(e){}
+if(acct&&!txs.length){txs=[{d:new Date().toISOString(),t:'Opening deposit',a:acct.deposit||0}];save()}
+function save(){try{localStorage.setItem('patti_tx',JSON.stringify(txs))}catch(e){}}
+
+function render(){
+  const names={savings:'Savings account',current:'Current account',fixed:'Fixed deposit'};
+  $('#hello').textContent='Welcome, '+(acct.name||'customer').split(' ')[0];
+  $('#atype').textContent=names[acct.type]||'Account';
+  $('#anum').textContent='Account no. '+acct.number;
+  $('#aemail').textContent=acct.email;
+  $('#bal').textContent=money(txs.reduce((s,x)=>s+x.a,0));
+  $('#tx').innerHTML='';
+  txs.slice().reverse().slice(0,8).forEach(x=>{
+    const li=document.createElement('li'),l=document.createElement('div'),r=document.createElement('span');
+    l.textContent=x.t;const s=document.createElement('small');s.textContent=new Date(x.d).toLocaleDateString('en',{day:'numeric',month:'short',year:'numeric'});l.appendChild(s);
+    r.textContent=(x.a>=0?'+':'-')+money(Math.abs(x.a));r.className=x.a>=0?'pos':'neg';
+    li.append(l,r);$('#tx').appendChild(li);
+  });
+}
+if(acct)render();
+
+// Actions
+let mode='';
+const cfg={deposit:['Deposit money',false,''],send:['Send money',true,'Recipient name or account'],bill:['Pay a bill',true,'Biller or reference']};
+document.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>{
+  mode=b.dataset.a;const c=cfg[mode];
+  $('#dt').textContent=c[0];$('#rwrap').hidden=!c[1];$('#wl').textContent=c[2];
+  $('#who').value='';$('#amt').value='';$('#derr').textContent='';$('#dlg').showModal();
+});
+$('#dc').onclick=()=>$('#dlg').close();
+$('#df').onsubmit=e=>{
+  e.preventDefault();
+  const amt=Math.floor(+$('#amt').value),who=$('#who').value.trim(),bal=txs.reduce((s,x)=>s+x.a,0);
+  if(!(amt>0)){$('#derr').textContent='Enter an amount above zero.';return}
+  if(mode!=='deposit'){
+    if(!who){$('#derr').textContent='Enter who this is for.';return}
+    if(amt>bal){$('#derr').textContent='Not enough balance for this payment.';return}
+  }
+  const t=mode==='deposit'?'Deposit':(mode==='send'?'Sent to ':'Bill: ')+who;
+  txs.push({d:new Date().toISOString(),t:t,a:mode==='deposit'?amt:-amt});
+  save();render();$('#dlg').close();
+};
+
+$('#out').onclick=()=>{try{sessionStorage.removeItem('patti_session')}catch(e){}location.href='index.html'};
+</script>
+</body>
+</html>
